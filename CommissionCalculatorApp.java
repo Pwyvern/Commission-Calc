@@ -1,35 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package commissioncalculator;
+package com.company;
+public class CommissionCalculation {
 
-/**
- *
- * @author phora
- */
-public class CommissionCalculatorApp extends CommissionCalculator {
-   //Commission Equation to calculate the amount of commission made
-    
-    public double commissionAmount(double annualSales, double commissionRate,double accCommissionRate, double target, double incentiveRate){
-        //Intialize the commission and set it to 0
-        double totalComm = 0;
-        //Test for the Exceeding the target
-        if(annualSales > target){
-            double salesDifference = annualSales - target;
-            totalComm = (annualSales * commissionRate)+(salesDifference * accCommissionRate);
-           
-        }else if(annualSales <= target){
-           totalComm= annualSales * commissionRate;
-           
-        }else if(annualSales<(incentiveRate * target)){
-            totalComm = 0;
-            
+
+    // Method to calculate commission
+    public double CalculateCommission(double annualSales, double salesTarget, double commissionRate, double incentiveRate, double acceleratedRate) {
+        // Set initial commission earned to 0
+        double commissionAccum = 0;
+
+        // If annual sales is below than 80% of sales target
+        if (annualSales < (salesTarget * incentiveRate)) {
+            commissionAccum = 0;
         }
-         return totalComm;
-    }
-    
+        // If annual sales meet 80% of the sales target
+        else if (annualSales <= salesTarget) {
+            commissionAccum = annualSales * commissionRate;
+        }
+        // If total sales exceed the sales target
+        else if (annualSales > salesTarget) {
+            double salesDifference = annualSales - salesTarget;
+            commissionAccum = (annualSales * commissionRate) + (salesDifference * acceleratedRate);
+        }
 
-    
+        return commissionAccum;
+
+
+    }
 }
